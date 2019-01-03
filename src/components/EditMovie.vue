@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-     let movie = this.movieObj[this.$route.params.id]
+     let movie = this.moviesObj[this.$route.params.id]
      this.newMovie = {
        name: movie.name,
        year: movie.year
