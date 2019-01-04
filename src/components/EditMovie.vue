@@ -16,6 +16,14 @@
                         <label>Movie Year:</label>
                         <input type="text" class="form-control" v-model="newMovie.year" />
                     </div>
+                     <div class="form-group">
+                        <label>Movie Genre:</label>
+                        <input type="text" class="form-control" v-model="newMovie.genre"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Movie Director:</label>
+                        <input type="text" class="form-control" v-model="newMovie.director" />
+                    </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Update Movie"/>
                     </div>
@@ -49,7 +57,9 @@ export default {
      let movie = this.moviesObj[this.$route.params.id]
      this.newMovie = {
        name: movie.name,
-       year: movie.year
+       year: movie.year,
+       genre: movie.genre,
+       director: movie.director
      }
   },
   methods: {

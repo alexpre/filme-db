@@ -6,8 +6,10 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Movie Name</th>
-          <th>Movie Year</th>
+          <th>Name</th>
+          <th>Year</th>
+          <th>Genre</th>
+          <th>Director</th>
           <th colspan="2">Action</th>
         </tr>
       </thead>
@@ -15,6 +17,8 @@
           <tr v-for="movie of movies" :key="movie['.key']">
             <td>{{ movie.name }}</td>
             <td>{{ movie.year }}</td>
+                        <td>{{ movie.genre }}</td>
+            <td>{{ movie.director }}</td>
             <td>
                 <router-link :to="{ name: 'Edit', params: {id: movie['.key']} }" class="btn btn-warning">
                   Edit

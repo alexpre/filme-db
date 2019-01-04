@@ -12,6 +12,7 @@
     "firebase": "^5.7.1",
     "nprogress": "^0.2.0",
     "vue": "^2.5.17",
+    "vue-gallery": "^1.5.0",
     "vue-router": "^3.0.2",
     "vuefire": "^1.4.5"
   },

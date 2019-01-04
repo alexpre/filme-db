@@ -1,23 +1,26 @@
 //App.vue
 
 <template>
+<div>
+  <br>
   <div id="app" class="container">
     <nav class="navbar navbar-expand-sm bg-light">
       <ul class="navbar-nav">
         <li class="nav-movie">
-          <router-link :to="{ name: 'Movie' }" class="nav-link">Movie</router-link>
+          <router-link :to="{ name: 'Movie' }" class="nav-link">Home</router-link>
         </li>
         <li class="nav-movie">
           <router-link :to="{ name: 'Add' }" class="nav-link">Add Movie</router-link>
         </li>
         <li class="nav-movie">
-          <router-link :to="{ name: 'List' }" class="nav-link">All Movie</router-link>
+          <router-link :to="{ name: 'List' }" class="nav-link">Movie List</router-link>
         </li>
       </ul>
     </nav>
     <div class="gap">
       <router-view></router-view>
     </div>
+  </div>
   </div>
 </template>
 
