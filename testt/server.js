@@ -33,6 +33,7 @@ app.listen(port, function(){
 app.post('/api/add', function(req, res){
     console.log('It is working')
     var movieDb = database.ref('/movies')
+
     // Find the movie equal to our name then creates a snapshot with the data found
     //if snapshot returns not null then the movie with that name already exists in our db
     //else we add the movie
@@ -54,17 +55,33 @@ app.post('/api/add', function(req, res){
                 {
                     res.send(error)
                 })
+                database.ref('/director').orderByChild('name').equalTo(req.body.director).once('value')
+                    .then(function(snapshot){
+                        if(snapshot.val() != null){
+                            var item = snapshot.val()
+                            var key = Object.keys(item)
+                            console.log(key)
+                            database.ref('/director/' + key + '/movies').update({
+                                    [req.body.name]: true                            })
+                        }else{
+                            database.ref('/director').push({
+                                name: req.body.director,
+                                movies:{
+                                    [req.body.name]: true
+                                }
+                            })
+                        }
+                    })
             }
         })
   })
 
-app.post('/api/update', function(req, res){
-    var movieDb = database.ref('/movies/' + req.body.key)
 
-    movieDb.orderByKey().equalTo(req.body.key).once('value')
-        .then(function (snapshot){
-            console.log(snapshot.val())
-            if(snapshot.val() != null){
+
+app.get('/api/update/:key', function(req, res){
+    var movieDb = database.ref('/movies/' + req.params.key)
+
+  
             movieDb.set({
                 name: req.body.name,
                 year: req.body.year,
@@ -72,17 +89,19 @@ app.post('/api/update', function(req, res){
                 director: req.body.director
             })
             .then(function(){
-                res.send('Data Updated')
+                res.send('1')
             })
             .catch(function(error)
             {
                 res.send(error)
             })
-        }else{
-            res.send('Movie not found')
-        }
-        })
+        
     
+})
+
+app.delete('/api/delete', function(req, res) {
+    var movieDb = database.ref('/movies/'+req.body.mkey)
+    movieDb.remove()       
 })
 
 

@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div v-responsive='phoneSize'>
+    <gallery :images="images" :index="index" @close="index = null"></gallery>
+    <div
+      class="image"
+      v-for="(image, imageIndex) in images"
+      :key="imageIndex"
+      @click="index = imageIndex"
+      :style="{ backgroundImage: 'url(' + image + ')', width: '110px', height: '75px' }"
+    ></div>
+    </div>
+    
+    <div v-responsive='allButPhoneSize'>
     <gallery :images="images" :index="index" @close="index = null"></gallery>
     <div
       class="image"
@@ -8,6 +20,8 @@
       @click="index = imageIndex"
       :style="{ backgroundImage: 'url(' + image + ')', width: '360px', height: '250px' }"
     ></div>
+    </div>
+
   </div>
 </template>
  
@@ -15,8 +29,14 @@
   import VueGallery from 'vue-gallery';
   
   export default {
-    data: function () {
+        components: {
+       name: 'Home',
+      'gallery': VueGallery
+    },
+    data() {
       return {
+        phoneSize: ['hidden-all','sm','xs'],
+        allButPhoneSize: ['hidden-all','lg','xl','md'],
         images: [
           'https://upload.wikimedia.org/wikipedia/en/3/33/L%27Arriv%C3%A9e_d%27un_train_en_gare_de_La_Ciotat.jpg',
           'https://i.ytimg.com/vi/_FrdVdKlxUk/hqdefault.jpg',
@@ -37,7 +57,7 @@
           'https://www.moviequotesandmore.com/wp-content/uploads/rocky-1.jpg',
           'https://d3j0sq6zklqdqq.cloudfront.net/photos/2015/06/30/53-27199-the-shining-2-1435691710.jpg',
           'https://static.toiimg.com/photo/61356642.cms',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6XYaTPf89slDI5yVcOw4m9NEwpa0rsILJIEbf7LFZwBHljCIT',
+          'https://www.syfy.com/sites/syfy/files/2017/09/et_the_extra_terrestrial_0.jpg',
           'https://cdn-az.allevents.in/banners/082541f86e107a03fba3bc3c4ecd7031-rimg-w720-h405-gmir.jpg',
           'https://nerdist.com/wp-content/uploads/2017/12/Home-Alone.jpg',
           'https://stmed.net/sites/default/files/the-silence-of-the-lambs-wallpapers-30108-8611049.jpg',
@@ -54,13 +74,8 @@
 
         ],
         index: null
-      };
-    },
- 
-    components: {
-       name: 'Home',
-      'gallery': VueGallery
-    },
+      }
+    }
   }
 </script> 
  

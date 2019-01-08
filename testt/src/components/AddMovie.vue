@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class='container'>
         <div class="card">
             <div class="card-header">
                 <h3>Add Movie</h3>
@@ -20,7 +20,13 @@
                     </div>
                     <div class="form-group">
                         <label>Movie Director:</label>
-                        <input type="text" class="form-control" id='movieDirector' v-model="newMovie.director"/>
+                        <select id='movieDirector' v-model='directors'>
+                            <option disabled value=''>Please select one</option>
+                            <option v-for="director in directors" :key="director['.key']">
+                                {{director.name}}
+                            </option>
+                            <option>Random</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Add Movie"/>
@@ -32,16 +38,12 @@
 </template>
 
 <script>
-
 import { db } from '../config/db';
 import axios from 'axios'
 
 export default {
   components: {
       name: 'AddMovie'
-  },
-  firebase: {
-    movies: db.ref('movies')
   },
   data () {
     return {
@@ -50,8 +52,13 @@ export default {
           year: '',
           genre: '',
           director: ''
-      }
+      },
+      directors: []
     }
+  },
+  firebase: {
+    movies: db.ref('movies'),
+    directors: db.ref('director')
   },
   methods: {
       addMovie(){
@@ -60,6 +67,7 @@ export default {
         year: document.getElementById('movieYear').value,
         genre: document.getElementById('movieGenre').value,
         director:document.getElementById('movieDirector').value,
+        //directorKey: director.key
       })
       .then(function (response) {
         console.log(response)
@@ -69,7 +77,7 @@ export default {
         this.newMovie.genre = '';
         this.newMovie.director = '';
         this.$router.push('/index')
-      }
+      },
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>List Movie</h1>
+   <br>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -12,18 +12,19 @@
         </tr>
       </thead>
       <tbody>
-          <tr v-for="movie of movies" :key="movie['.key']">
+          <tr v-for="movie in movies" :key="movie['.key']">
+            <td>something</td>
             <td>{{ movie.name }}</td>
             <td>{{ movie.year }}</td>
             <td>{{ movie.genre }}</td>
             <td>{{ movie.director }}</td>
             <td>
-                <router-link :to="{ name: 'Edit', params: {id: movie['.key']} }" class="btn btn-warning">
+              <router-link :to="{ name: 'EditMovie', params: {id: movie['.key']} }" class="btn btn-warning">
                   Edit
                 </router-link>
             </td>
             <td>
-              <button @click="deleteMovie(movie['.key'])" class="btn btn-danger">Delete</button>
+              <button @click="deleteMovie" class="btn btn-danger">Delete</button>
             </td>
           </tr>
       </tbody>
@@ -32,8 +33,8 @@
 </template>
 
 <script>
-
 import { db } from '../config/db';
+import axios from 'axios';
 
 export default {
   components: {
@@ -45,12 +46,17 @@ export default {
     }
   },
   firebase: {
-    movies: db.ref('movies')
+    movies: db.ref('/movies')
   },
   methods: {
-    deleteMovie(key) {
-      this.$firebaseRefs.list.child(key).remove();
+    deleteMovie() {
+      axios.delete('http://192.168.0.3:3000/api/delete', {
+        mkey: '-LVPPyDCNKAUlbnVQ9So'
+      })
     }
   }
 }
 </script>
+
+<style>
+</style>
